@@ -1,4 +1,4 @@
-from __future__ import division, print_function
+from __future__ import division, print_function, absolute_import
 
 '''
 This script calculates pixel pitch in µm for cameras listed on geizhals.at.
@@ -149,7 +149,7 @@ def get_dslrs():
 def get_all():
     return get_compacts() + get_dslrs()
 
-def sort_by(specs, key='pitch', reverse=True):
+def sorted_by(specs, key='pitch', reverse=True):
     fns = {'pitch': lambda c: c.pitch if c.pitch else -1,
            'area': lambda c: c.area if c.area else -1,
            'mpix': lambda c: c.spec.mpix if c.spec.mpix else -1,

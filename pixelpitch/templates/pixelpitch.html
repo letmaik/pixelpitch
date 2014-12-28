@@ -1,0 +1,78 @@
+{% extends "index.html" %}
+
+{% macro table(specs, without_pitch=False) %}
+  <table class="table">
+  	<thead>
+	  	<tr>
+	  		<th>Name</th>
+	  		<th>Sensor Size</th>
+	  		<th>Resolution</th>
+	  	{% if not without_pitch %}
+	  		<th>Pixel Pitch</th>
+	  	{% endif %}
+	  	</tr>
+  	</thead>
+  	<tbody>
+    {% for spec in specs %}
+    	<tr>
+    		<td>{{ spec.spec.name }}</td>
+    		<td>
+    		{%- if spec.size %}
+    			{{ spec.size[0]|round(1) }} x {{ spec.size[1]|round(1) }} mm
+    		{% else %}
+    			unknown
+    		{% endif -%}
+    		</td>
+    		<td>
+    		{%- if spec.spec.mpix %}
+    			{{ spec.spec.mpix|round(1) }} MP
+    		{% else %}
+    			unknown
+    		{% endif -%}
+    		</td>
+    	{% if not without_pitch %}
+    		<td>
+    		{%- if spec.pitch %}
+    			{{ spec.pitch|round(1) }} µm
+    		{% else %}
+    			unknown
+    		{% endif -%}
+    		</td>
+    	{% endif %}
+    	</tr>
+    {% endfor %}
+	</tbody>
+  </table>
+{% endmacro %}
+
+{% block content %}
+    <h1>{{ title }}</h1>
+    
+  <p>
+  	All camera data was retrieved from <a href="http://geizhals.at">http://geizhals.at</a>.
+  	Note that sensor size and pixel pitch may not be fully accurate in all cases.
+  	As <a href="http://geizhals.at">http://geizhals.at</a> is a shopping site, duplicate entries
+  	of the same camera may exist (differing case color etc.) and these are not filtered out here.
+  </p>
+  
+  {{ table(specs|selectattr('pitch')) }}
+  
+  <h2>Cameras with unknown pixel pitch</h2>
+  
+  {{ table(specs|rejectattr('pitch')|sort(attribute='spec.name'), without_pitch=True) }}
+
+{% endblock %}
+
+{% block js %}
+<script>
+	$(function(){
+		$('.table').tablesorter({
+			theme: 'bootstrap',
+			headerTemplate: '{content} {icon}',
+			widgets: ["uitheme"],
+			sortInitialOrder: 'desc',
+			sortRestart: true,
+		});
+	});
+</script>
+{% endblock %}
