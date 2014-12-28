@@ -1,0 +1,23 @@
+language: python
+
+python:
+  - 3.4
+
+install: python setup.py install
+
+script:
+  - mkdir ../html_out
+  - pixelpitch-html ../html_out
+
+after_success:
+  - chmod 600 ~/.ssh/id_rsa
+  - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - cd ..
+  - git clone -b gh-pages git@github.com:neothemachine/pixelpitch.git gh-pages
+  - mv pixelpitch/html_out/* gh-pages
+  - cd gh-pages
+  - git config user.name "Travis"
+  - git config user.email "travis@travis-ci.org"
+  - git add .
+  - git commit -m 'automated commit'
+  - git push origin gh-pages

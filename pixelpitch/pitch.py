@@ -81,6 +81,7 @@ def extract_entries(url):
                          ('Cookie', 'blaettern=1000')]
     html = opener.open(url).read().decode('utf-8')
     entries = re.findall(r'<TR class=t[12]>.+?</tr>', html, re.DOTALL)
+    assert entries
     return entries
 
 Spec = namedtuple('Spec', 'name type size mpix')
