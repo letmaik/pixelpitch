@@ -4,25 +4,33 @@ from jinja2 import Environment, PackageLoader
 from pixelpitch import pitch
 import os
 import sys
+from datetime import datetime
 
 env = Environment(loader=PackageLoader('pixelpitch', 'templates'))
+
+def datetimeformat(value, format='%d %b %Y %H:%M:%S UTC'):
+    return value.strftime(format)
+env.filters['formatdate'] = datetimeformat
 
 def render():
     template = env.get_template('pixelpitch.html')
     specs_compacts = pitch.sorted_by(pitch.get_compacts(), 'pitch')
     html_compacts = template.render(title='Compact Cameras',
                                     specs=specs_compacts,
-                                    page='compact')
+                                    page='compact',
+                                    date=datetime.utcnow())
     
     specs_dslr = pitch.sorted_by(pitch.get_dslrs(), 'pitch')
     html_dslr = template.render(title='DSLR and System Cameras',
                                 specs=specs_dslr,
-                                page='dslr')
+                                page='dslr',
+                                date=datetime.utcnow())
     
     specs_all = pitch.sorted_by(specs_compacts + specs_dslr, 'pitch')
     html_all = template.render(title='All Cameras',
                                specs=specs_all,
-                               page='all')
+                               page='all',
+                               date=datetime.utcnow())
     
     return html_compacts, html_dslr, html_all
 

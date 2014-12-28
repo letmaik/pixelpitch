@@ -55,6 +55,10 @@
   	of the same camera may exist (differing case color etc.) and these are not filtered out here.
   </p>
   
+  <p>
+  	Last update: {{ date|formatdate }}
+  </p>
+  
   {{ table(specs|selectattr('pitch')) }}
   
   <h2>Cameras with unknown pixel pitch</h2>
