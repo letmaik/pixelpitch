@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 
 {% macro table(specs, without_pitch=False) %}
-  <table class="table">
+  <table class="table" id="table_with{% if without_pitch %}out{% endif %}_pitch">
   	<thead>
 	  	<tr>
 	  		<th>Name</th>
@@ -31,15 +31,15 @@
     			unknown
     		{% endif -%}
     		</td>
-    	{% if not without_pitch %}
+    	{%- if not without_pitch %}
     		<td>
     		{%- if spec.pitch %}
-    			{{ spec.pitch|round(1) }} µm
+    			<span>{{ spec.pitch|round(1) }}</span> µm
     		{% else %}
     			unknown
     		{% endif -%}
     		</td>
-    	{% endif %}
+    	{% endif -%}
     		<td>
     		{%- if spec.spec.year %}
     			{{ spec.spec.year }}
@@ -65,6 +65,10 @@
   	<a href="http://geizhals.at">http://geizhals.at</a>.
   </p>
   
+  {# enable this once we can query cameras not sold anymore to have better coverage #}
+  <p><a href="javascript:void(0)" id="create_plot" style="display:none">Create Box Plot</a></p>
+  <div id="pitch_plot" style="height: 300px; display: none; margin-left: auto; margin-right: auto;"></div>
+  
   <p>
   	Last update: {{ date|formatdate }}
   </p>
@@ -89,6 +93,30 @@
 			widgets: ["uitheme"],
 			sortInitialOrder: 'desc',
 			sortRestart: true,
+		});
+		
+		$('#create_plot').click(function() {
+			var data = [];
+			$("#table_with_pitch tbody tr").each(function(i, el) {
+			    var cam = {};
+			    cam.name = $("td:first-child", this).text();
+			    cam.year = $("td:nth-child(5)", this).text().trim();
+			    cam.value = parseFloat($("td:nth-child(4) span", this).text());
+			    if (cam.year.length == 4) {
+			    	cam.year = parseFloat(cam.year);
+			    	data.push(cam);
+			    }
+			  });
+			
+			$("#pitch_plot").empty().show();
+			d3plus.viz()
+			    .container("#pitch_plot")
+			    .data(data)
+			    .type("box")
+			    .id("name")
+			    .x("year")
+			    .y("value")
+			    .draw();
 		});
 	});
 </script>
