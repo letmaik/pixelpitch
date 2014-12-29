@@ -36,15 +36,19 @@ def render():
                                page='all',
                                date=datetime.utcnow())
     
-    return html_compacts, html_dslr, html_all
+    template = env.get_template('about.html')
+    html_about = template.render(page='about')
+    
+    return html_compacts, html_dslr, html_all, html_about
 
 def render_save(folder):
     assert os.path.isdir(folder)
-    html_compacts, html_dslr, html_all = render()
+    html_compacts, html_dslr, html_all, html_about = render()
     
     _write(os.path.join(folder, 'compact.html'), html_compacts)
     _write(os.path.join(folder, 'dslr.html'), html_dslr)
     _write(os.path.join(folder, 'index.html'), html_all)
+    _write(os.path.join(folder, 'about.html'), html_about)
     
 def main():
     if len(sys.argv) == 2:
