@@ -9,6 +9,7 @@ import re
 import html
 from math import sqrt
 from collections import namedtuple
+from _collections import defaultdict
 
 # For compact cameras we assume 4:3 sensor aspect ratio if not given.
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
@@ -114,7 +115,56 @@ def extract_specs(entries):
             mpix = None
         
         specs.append(Spec(name, typ, size, mpix))
+    
+    specs = deduplicate_specs(specs)
+    
     return specs
+
+extras = ['weiß', 'schwarz', 'rot', 'grau', 'pink', 'gold', 'silber', 'violett', 'grün', 'blau',
+          'orange', 'braun', 'gelb', 'beige', 'bordeaux', 'bronze', 'rosa', 'graphit', 'titan',
+          'camouflage', 'khaki', 'anthrazit',
+          'mit Objektiv', 'Gehäuse']
+extras_re = re.compile('|'.join(extras))
+
+parens_re = re.compile('\(.+\)$')
+
+def deduplicate_specs(specs):
+    '''
+    Unifies product names and tries to remove duplicates which only differ
+    in color, lens, etc.
+    '''
+    groups = defaultdict(list) # cleaned product name -> specs
+    rest = []
+    
+    # unify product names and group possible identical cameras
+    for spec in specs:
+        match = extras_re.search(spec.name)
+        if match:
+            unified_name = spec.name[:match.start()]
+            groups[unified_name].append(spec)
+        else:
+            rest.append(spec)
+            
+    # check if grouped cameras have the same sensor specs
+    for unified_name, grouped_specs in groups.items():
+        ref = grouped_specs[0]
+        if all(spec[1:] == ref[1:] for spec in grouped_specs):
+            rest.append(Spec(unified_name, ref.type, ref.size, ref.mpix))
+        else:
+            rest.extend(grouped_specs)
+    
+    # remove product numbers etc. in parentheses which are at the end of the name
+    # also, strip whitespaces at start or end
+    def remove_parens(spec):
+        name = spec.name.strip()
+        match = parens_re.search(name)
+        if match:
+            name = name[:match.start()].strip()
+        return Spec(name, spec.type, spec.size, spec.mpix)
+        
+    rest = list(map(remove_parens, rest))
+    
+    return rest
 
 SpecDerived = namedtuple('SpecDerived', 'spec size area pitch')
 
