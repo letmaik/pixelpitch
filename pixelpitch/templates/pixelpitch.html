@@ -15,7 +15,7 @@
   	<tbody>
     {% for spec in specs %}
     	<tr>
-    		<td>{{ spec.spec.name }}</td>
+    		<td><a href="https://duckduckgo.com/?q={{ spec.spec.name|urlencode }}">{{ spec.spec.name }}</a></td>
     		<td>
     		{%- if spec.size %}
     			{{ spec.size[0]|round(1) }} x {{ spec.size[1]|round(1) }} mm

@@ -1,16 +1,20 @@
 from __future__ import absolute_import, print_function
 
 from jinja2 import Environment, PackageLoader
-from pixelpitch import pitch
 import os
 import sys
 from datetime import datetime
+import urllib.parse
+
+from pixelpitch import pitch
 
 env = Environment(loader=PackageLoader('pixelpitch', 'templates'))
 
 def datetimeformat(value, format='%d %b %Y %H:%M:%S UTC'):
     return value.strftime(format)
 env.filters['formatdate'] = datetimeformat
+
+env.filters['urlencode'] = urllib.parse.quote_plus
 
 def render():
     template = env.get_template('pixelpitch.html')
