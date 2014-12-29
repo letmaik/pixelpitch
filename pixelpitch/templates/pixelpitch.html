@@ -10,6 +10,7 @@
 	  	{% if not without_pitch %}
 	  		<th>Pixel Pitch</th>
 	  	{% endif %}
+	  		<th>Year</th>
 	  	</tr>
   	</thead>
   	<tbody>
@@ -39,6 +40,13 @@
     		{% endif -%}
     		</td>
     	{% endif %}
+    		<td>
+    		{%- if spec.spec.year %}
+    			{{ spec.spec.year }}
+    		{% else %}
+    			unknown
+    		{% endif -%}
+			</td>
     	</tr>
     {% endfor %}
 	</tbody>

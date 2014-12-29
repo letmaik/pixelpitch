@@ -15,14 +15,15 @@ from _collections import defaultdict
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
 # http://en.wikipedia.org/wiki/Image_sensor_format
 # This seems necessary as the advertised sensor sizes are often larger than they actually are.
-compact_url = 'http://geizhals.at/de/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&bl1_id=1000&sort=filter86'
+compact_url = 'http://geizhals.at/de/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=filter86'
 
 # For DSLR cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.at/de/?cat=dcamsp&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=166&fcols=169&bl1_id=1000&sort=filter169'
+dslr_url = 'http://geizhals.at/de/?cat=dcamsp&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<td align=center>(1/[\d\.]+")</td>')
 mpix_re = re.compile(r'<td align=center>([\d\.]+) Megapixel</td>')
+year_re = re.compile(r'<td align=center>([\d]{4})</td>')
 name_re = re.compile(r'<td class=ty><a class=ty href=".+">(.+)</a>')
 
 def sensor_area(width, height):
@@ -85,7 +86,7 @@ def extract_entries(url):
     assert entries
     return entries
 
-Spec = namedtuple('Spec', 'name type size mpix')
+Spec = namedtuple('Spec', 'name type size mpix year')
 
 def extract_specs(entries):
     specs = []
@@ -94,6 +95,7 @@ def extract_specs(entries):
         type_match = type_re.search(entry)
         size_match = size_re.search(entry)    
         mpix_match = mpix_re.search(entry)
+        year_match = year_re.search(entry)
         
         name = html.unescape(name_match.group(1))
         name = " ".join(name.split()) # removes consecutive whitespaces
@@ -113,8 +115,13 @@ def extract_specs(entries):
             mpix = float(mpix_match.group(1))
         else:
             mpix = None
+            
+        if year_match is not None:
+            year = int(year_match.group(1))
+        else:
+            year = None
         
-        specs.append(Spec(name, typ, size, mpix))
+        specs.append(Spec(name, typ, size, mpix, year))
     
     specs = deduplicate_specs(specs)
     
@@ -148,8 +155,11 @@ def deduplicate_specs(specs):
     # check if grouped cameras have the same sensor specs
     for unified_name, grouped_specs in groups.items():
         ref = grouped_specs[0]
-        if all(spec[1:] == ref[1:] for spec in grouped_specs):
-            rest.append(Spec(unified_name, ref.type, ref.size, ref.mpix))
+        if all(spec.type == ref.type and spec.size == ref.size and spec.mpix == ref.mpix 
+               for spec in grouped_specs):
+            years = [s.year for s in grouped_specs if s.year]
+            year = min(years) if years else None
+            rest.append(Spec(unified_name, ref.type, ref.size, ref.mpix, year))
         else:
             rest.extend(grouped_specs)
     
@@ -160,7 +170,7 @@ def deduplicate_specs(specs):
         match = parens_re.search(name)
         if match:
             name = name[:match.start()].strip()
-        return Spec(name, spec.type, spec.size, spec.mpix)
+        return Spec(name, spec.type, spec.size, spec.mpix, spec.year)
         
     rest = list(map(remove_parens, rest))
     
