@@ -20,7 +20,7 @@ compact_url = 'http://geizhals.at/de/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail
 # For DSLR cameras we use the specified sensor dimensions as is.
 dslr_url = 'http://geizhals.at/de/?cat=dcamsp&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=166&fcols=169&bl1_id=1000&sort=filter169'
 
-size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm\)')
+size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<td align=center>(1/[\d\.]+")</td>')
 mpix_re = re.compile(r'<td align=center>([\d\.]+) Megapixel</td>')
 name_re = re.compile(r'<td class=ty><a class=ty href=".+">(.+)</a>')

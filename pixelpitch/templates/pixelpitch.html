@@ -62,10 +62,13 @@
   </p>
   
   {{ table(specs|selectattr('pitch')) }}
+    
+  {% set specs_nopitch = specs|rejectattr('pitch')|sort(attribute='spec.name') %}
+  {% if specs_nopitch %}
+  	<h2>Cameras with unknown pixel pitch</h2>
   
-  <h2>Cameras with unknown pixel pitch</h2>
-  
-  {{ table(specs|rejectattr('pitch')|sort(attribute='spec.name'), without_pitch=True) }}
+  	{{ table(specs_nopitch, without_pitch=True) }}
+  {% endif %}
 
 {% endblock %}
 
