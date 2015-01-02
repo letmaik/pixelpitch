@@ -19,7 +19,7 @@ env.filters['urlencode'] = urllib.parse.quote_plus
 def render():
     template = env.get_template('pixelpitch.html')
     specs_fixedlens = pitch.sorted_by(pitch.get_fixed(), 'pitch')
-    html_fixedlens = template.render(title='Compact Cameras',
+    html_fixedlens = template.render(title='Fixed-lens Cameras',
                                     specs=specs_fixedlens,
                                     page='fixedlens',
                                     date=datetime.utcnow())
