@@ -11,14 +11,15 @@ from math import sqrt
 from collections import namedtuple
 from _collections import defaultdict
 
-# For compact cameras we assume 4:3 sensor aspect ratio if not given.
+# For fixed-lens cameras we assume 4:3 sensor aspect ratio if not given.
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
 # http://en.wikipedia.org/wiki/Image_sensor_format
 # This seems necessary as the advertised sensor sizes are often larger than they actually are.
-compact_url = 'http://geizhals.at/de/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=filter86'
+fixed_url = 'http://geizhals.at/eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=filter86'
 
-# For DSLR cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.at/de/?cat=dcamsp&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169'
+# For DSLR and EVIL cameras we use the specified sensor dimensions as is.
+dslr_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169&xf=1480_SLR+%28spiegelreflex%29'
+evil_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169&xf=1480_EVIL+%28spiegellos%29'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<td align=center>(1/[\d\.]+")</td>')
@@ -199,16 +200,20 @@ def derive_spec(spec, use_size_table=False):
 def derive_specs(specs, use_size_table=False):
     return list(map(lambda spec: derive_spec(spec, use_size_table), specs))
 
-def get_compacts():
-    entries = extract_entries(compact_url)
+def get_fixed():
+    entries = extract_entries(fixed_url)
     return derive_specs(extract_specs(entries), use_size_table=True)
 
 def get_dslrs():
     entries = extract_entries(dslr_url)
     return derive_specs(extract_specs(entries), use_size_table=False)
 
+def get_evils():
+    entries = extract_entries(evil_url)
+    return derive_specs(extract_specs(entries), use_size_table=False)
+
 def get_all():
-    return get_compacts() + get_dslrs()
+    return get_fixed() + get_dslrs() + get_evils()
 
 def sorted_by(specs, key='pitch', reverse=True):
     fns = {'pitch': lambda c: c.pitch if c.pitch else -1,
