@@ -15,11 +15,11 @@ from _collections import defaultdict
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
 # http://en.wikipedia.org/wiki/Image_sensor_format
 # This seems necessary as the advertised sensor sizes are often larger than they actually are.
-fixed_url = 'http://geizhals.at/eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=filter86'
+fixed_url = 'http://geizhals.at/eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=artikel'
 
 # For DSLR and EVIL cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169&xf=1480_SLR+%28spiegelreflex%29'
-evil_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=filter169&xf=1480_EVIL+%28spiegellos%29'
+dslr_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_SLR+%28spiegelreflex%29'
+evil_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_EVIL+%28spiegellos%29'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<td align=center>(1/[\d\.]+")</td>')
