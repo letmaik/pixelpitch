@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/neothemachine/pixelpitch.svg?branch=master)](https://travis-ci.org/neothemachine/pixelpitch)
+[![Build Status](https://travis-ci.org/letmaik/pixelpitch.svg?branch=master)](https://travis-ci.org/letmaik/pixelpitch)
 
-http://neothemachine.github.io/pixelpitch/
+https://letmaik.github.io/pixelpitch/
 
 Lists current cameras with their physical pixel sizes (pixel pitch).
 
