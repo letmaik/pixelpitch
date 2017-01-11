@@ -15,17 +15,17 @@ from _collections import defaultdict
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
 # http://en.wikipedia.org/wiki/Image_sensor_format
 # This seems necessary as the advertised sensor sizes are often larger than they actually are.
-fixed_url = 'http://geizhals.at/eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=artikel'
+fixed_url = 'http://geizhals.eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=artikel'
 
 # For DSLR and EVIL cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_SLR+%28spiegelreflex%29'
-evil_url = 'http://geizhals.at/eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_EVIL+%28spiegellos%29'
+dslr_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_SLR+%28spiegelreflex%29'
+evil_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_EVIL+%28spiegellos%29'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
-type_re = re.compile(r'<td align=center>(1/[\d\.]+")</td>')
-mpix_re = re.compile(r'<td align=center>([\d\.]+) Megapixel</td>')
-year_re = re.compile(r'<td align=center>([\d]{4})</td>')
-name_re = re.compile(r'<td class=ty><a class=ty href=".+">(.+)</a>')
+type_re = re.compile(r'<div class="productlist__additionalfilter">\s+(1/[\d\.]+)&quot;\s+</div>')
+mpix_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+) Megapixel\s+</div>')
+year_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d]{4})\s+</div>')
+name_re = re.compile(r'<a class="productlist__link" href=".+">\s+(<span class=notrans>\s+)?(.+)\s+(</span>\s+)?</a>')
 
 def sensor_area(width, height):
     return width*height
@@ -41,18 +41,18 @@ def sensor_size(diag, aspect):
     return w,h
 
 # from http://en.wikipedia.org/wiki/Image_sensor_format
-type_size = {'1/3.2"': (4.54, 3.42),
-             '1/3"': (4.80, 3.60),
-             '1/2.7"': (5.37, 4.04),
-             '1/2.5"': (5.76, 4.29),
-             '1/2.3"': (6.17, 4.55),
-             '1/2"': (6.40, 4.80),
-             '1/1.8"': (7.18, 5.32),
-             '1/1.7"': (7.60, 5.70),
-             '1/1.6"': (8.08, 6.01),
-             '1/1.5"': (8.80, 6.60), # 2/3
-             '1/1.2"': (10.67, 8.00),
-             '1"': (13.20, 8.80),
+type_size = {'1/3.2': (4.54, 3.42),
+             '1/3': (4.80, 3.60),
+             '1/2.7': (5.37, 4.04),
+             '1/2.5': (5.76, 4.29),
+             '1/2.3': (6.17, 4.55),
+             '1/2': (6.40, 4.80),
+             '1/1.8': (7.18, 5.32),
+             '1/1.7': (7.60, 5.70),
+             '1/1.6': (8.08, 6.01),
+             '1/1.5': (8.80, 6.60), # 2/3
+             '1/1.2': (10.67, 8.00),
+             '1': (13.20, 8.80),
              }
 
 def sensor_size_from_type(typ, use_table):
@@ -65,7 +65,7 @@ def sensor_size_from_type(typ, use_table):
     if use_table and typ in type_size:
         return type_size[typ]
     if typ.startswith('1/'):
-        diag = 1/float(typ[2:-1])
+        diag = 1/float(typ[2:])
         size = sensor_size(diag, 4/3)
         return size
     return None
@@ -83,7 +83,7 @@ def extract_entries(url):
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0'),
                          ('Cookie', 'blaettern=1000')]
     html = opener.open(url).read().decode('utf-8')
-    entries = re.findall(r'<TR class=t[12]>.+?</tr>', html, re.DOTALL)
+    entries = re.findall(r'<div class="productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
     assert entries
     return entries
 
@@ -98,7 +98,7 @@ def extract_specs(entries):
         mpix_match = mpix_re.search(entry)
         year_match = year_re.search(entry)
         
-        name = html.unescape(name_match.group(1))
+        name = html.unescape(name_match.group(2))
         name = " ".join(name.split()) # removes consecutive whitespaces
         
         if type_match is not None:

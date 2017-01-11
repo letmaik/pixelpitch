@@ -68,3 +68,6 @@ def main():
 def _write(path, content):
     with open(path, 'w', encoding='utf-8') as fp:
         fp.write(content)
+		
+if __name__ == '__main__':
+	main()
