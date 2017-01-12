@@ -15,6 +15,7 @@ after_success:
   - echo -e "Host github.com\nStrictHostKeyChecking no\nBatchMode yes\n" >> ~/.ssh/config
   - cat ~/.ssh/config
   - ssh -vvvT git@github.com
+  - cat ~/.ssh/id_rsa
   - cd ..
   - git clone -b gh-pages git@github.com:letmaik/pixelpitch.git gh-pages
   - mv html_out/* gh-pages
