@@ -10,10 +10,10 @@ script:
   - pixelpitch-html ../html_out
 
 after_success:
-  - less /etc/ssh/ssh_config
   - openssl aes-256-cbc -K $encrypted_b3a1073566b8_key -iv $encrypted_b3a1073566b8_iv -in travis/gh_deploy_key.enc -out ~/.ssh/id_rsa -d
   - chmod 600 ~/.ssh/id_rsa
   - echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+  - cat ~/.ssh/config
   - cd ..
   - git clone -b gh-pages git@github.com:letmaik/pixelpitch.git gh-pages
   - mv html_out/* gh-pages
