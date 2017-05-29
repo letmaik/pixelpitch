@@ -1,27 +1,19 @@
+sudo: false
+
 language: python
 
-python:
-  - 3.4
+python: 3.5
 
 install: python setup.py install
 
 script:
-  - mkdir ../html_out
-  - pixelpitch-html ../html_out
+  - mkdir html_out
+  - pixelpitch-html html_out
 
-after_success:
-  - openssl aes-256-cbc -K $encrypted_b3a1073566b8_key -iv $encrypted_b3a1073566b8_iv -in travis/gh_deploy_key.enc -out ~/.ssh/id_rsa -d
-  - chmod 600 ~/.ssh/id_rsa
-  - echo -e "Host github.com\nStrictHostKeyChecking no\nBatchMode yes\n" >> ~/.ssh/config
-  - cat ~/.ssh/config
-  - ssh -vvvT git@github.com
-  - cat ~/.ssh/id_rsa
-  - cd ..
-  - git clone -b gh-pages git@github.com:letmaik/pixelpitch.git gh-pages
-  - mv html_out/* gh-pages
-  - cd gh-pages
-  - git config user.name "Travis"
-  - git config user.email "travis@travis-ci.org"
-  - git add .
-  - git commit -m 'automated commit'
-  - git push origin gh-pages
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: $GITHUB_TOKEN # Set in travis-ci.org dashboard
+  local_dir: html_out
+  on:
+    branch: master

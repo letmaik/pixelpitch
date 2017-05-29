@@ -5,7 +5,7 @@ setup(
     version = '1.0.0',
     author = 'Maik Riechert',
     author_email = 'maik.riechert@arcor.de',
-    url = 'https://github.com/neothemachine/pixelpitch',
+    url = 'https://github.com/letmaik/pixelpitch',
     classifiers=[
       'Development Status :: 4 - Beta',
       'Natural Language :: English',
@@ -16,8 +16,7 @@ setup(
     packages = find_packages(),
     include_package_data=True,
     zip_safe=False,
-    install_requires=['jinja2',
-                      ],
+    install_requires=['jinja2'],
     entry_points = {
         'console_scripts': [
             'pixelpitch-html = pixelpitch.html:main',
