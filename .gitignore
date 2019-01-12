@@ -5,3 +5,5 @@
 /.pydevproject
 /*.html
 *.pyc
+/.mypy_cache
+/.vscode

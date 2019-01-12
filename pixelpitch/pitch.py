@@ -79,12 +79,15 @@ def pixel_pitch(area, mpix):
     return 1000*sqrt(area/(mpix*10**6))
 
 def extract_entries(url):
+    print("Fetching " + url)
     opener = urllib.request.build_opener()
     opener.addheaders = [('User-agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:34.0) Gecko/20100101 Firefox/34.0'),
                          ('Cookie', 'blaettern=1000')]
     html = opener.open(url).read().decode('utf-8')
-    entries = re.findall(r'<div class="productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
+    print("Response length: {}".format(len(html)))
+    entries = re.findall(r'class="productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
     assert entries
+    print("Found {} entries".format(len(entries)))
     return entries
 
 Spec = namedtuple('Spec', 'name type size mpix year')
