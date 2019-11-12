@@ -18,8 +18,8 @@ from _collections import defaultdict
 fixed_url = 'http://geizhals.eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=artikel'
 
 # For DSLR and EVIL cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_SLR+%28spiegelreflex%29'
-evil_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_EVIL+%28spiegellos%29'
+dslr_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_Spiegelreflex+(DSLR)'
+evil_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_Spiegellos+(DSLM)'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<div class="productlist__additionalfilter">\s+(1/[\d\.]+)&quot;\s+</div>')
@@ -85,9 +85,9 @@ def extract_entries(url):
                          ('Cookie', 'blaettern=1000')]
     html = opener.open(url).read().decode('utf-8')
     print("Response length: {}".format(len(html)))
-    entries = re.findall(r'class="productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
-    assert entries
+    entries = re.findall(r'class="row productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
     print("Found {} entries".format(len(entries)))
+    assert len(entries) > 0
     return entries
 
 Spec = namedtuple('Spec', 'name type size mpix year')
