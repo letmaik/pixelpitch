@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Camera Sensor Pixel Pitch List</title>
+    
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-fork-ribbon-css/0.1.1/gh-fork-ribbon.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.4/css/theme.bootstrap.css" />
+	
+	<style>
+	body {
+	  padding-top: 50px;
+	}
+	</style>
+</head>
+<body>
+    <div class="github-fork-ribbon-wrapper right">
+        <div class="github-fork-ribbon">
+            <a href="https://github.com/neothemachine/pixelpitch">Fork me on GitHub</a>
+        </div>
+    </div>
+    
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#"></a>-->
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="index.html">All Cameras</a></li>
+            <li class="active"><a href="dslr.html">DSLR</a></li>
+            <li><a href="evil.html">EVIL</a></li>
+            <li><a href="fixedlens.html">Fixed-lens</a></li>
+            <li><a href="about.html">About Pixel Pitch</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+    <div class="container">
+
+      <div class="content">
+        <div class="row">
+  			<div class="span12">
+
+			
+    <h1>DSLR Cameras</h1>
+    
+  <p>
+  	All camera data was retrieved from <a href="http://geizhals.at">http://geizhals.at</a>.
+  	Note that sensor size and <a href="about.html">pixel pitch</a> may not be fully accurate in all cases.
+  	As <a href="http://geizhals.at">http://geizhals.at</a> is a shopping site, duplicate entries
+  	of the same camera may exist although care was taken to filter those out.
+  	Currently, only cameras are displayed which are sold by at least one shop on 
+  	<a href="http://geizhals.at">http://geizhals.at</a>.
+  </p>
+  
+  
+  <p><a href="javascript:void(0)" id="create_plot" style="display:none">Create Box Plot</a></p>
+  <div id="pitch_plot" style="height: 300px; display: none; margin-left: auto; margin-right: auto;"></div>
+  
+  <p>
+  	Last update: 11 Dec 2019 23:30:25 UTC
+  </p>
+  
+  
+  <table class="table" id="table_with_pitch">
+  	<thead>
+	  	<tr>
+	  		<th>Name</th>
+	  		<th>Sensor Size</th>
+	  		<th>Resolution</th>
+	  	
+	  		<th>Pixel Pitch</th>
+	  	
+	  		<th>Year</th>
+	  	</tr>
+  	</thead>
+  	<tbody>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D4s">Nikon D4s</a></td>
+    		<td>
+    			36.0 x 23.9 mm
+    		</td>
+    		<td>
+    			16.2 MP
+    		</td>
+    		<td>
+    			<span>7.3</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+Df">Nikon Df</a></td>
+    		<td>
+    			36.0 x 23.9 mm
+    		</td>
+    		<td>
+    			16.2 MP
+    		</td>
+    		<td>
+    			<span>7.3</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1D+Mark+III">Canon EOS 1D Mark III</a></td>
+    		<td>
+    			28.1 x 18.7 mm
+    		</td>
+    		<td>
+    			10.1 MP
+    		</td>
+    		<td>
+    			<span>7.2</span> µm
+    		</td>
+    	<td>
+    			2007
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1D+X">Canon EOS 1D X</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			18.1 MP
+    		</td>
+    		<td>
+    			<span>6.9</span> µm
+    		</td>
+    	<td>
+    			2011
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+6D">Canon EOS 6D</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			20.2 MP
+    		</td>
+    		<td>
+    			<span>6.5</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1D+X+Mark+II">Canon EOS 1D X Mark II</a></td>
+    		<td>
+    			35.9 x 23.9 mm
+    		</td>
+    		<td>
+    			20.2 MP
+    		</td>
+    		<td>
+    			<span>6.5</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5">Nikon D5</a></td>
+    		<td>
+    			35.9 x 23.9 mm
+    		</td>
+    		<td>
+    			20.8 MP
+    		</td>
+    		<td>
+    			<span>6.4</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1Ds+Mark+III">Canon EOS 1Ds Mark III</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			21.1 MP
+    		</td>
+    		<td>
+    			<span>6.4</span> µm
+    		</td>
+    	<td>
+    			2007
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+5D+Mark+III">Canon EOS 5D Mark III</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			22.3 MP
+    		</td>
+    		<td>
+    			<span>6.2</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D40x">Nikon D40x</a></td>
+    		<td>
+    			23.6 x 15.8 mm
+    		</td>
+    		<td>
+    			10.2 MP
+    		</td>
+    		<td>
+    			<span>6.0</span> µm
+    		</td>
+    	<td>
+    			2007
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+645D">Pentax 645D</a></td>
+    		<td>
+    			44.0 x 33.0 mm
+    		</td>
+    		<td>
+    			40.0 MP
+    		</td>
+    		<td>
+    			<span>6.0</span> µm
+    		</td>
+    	<td>
+    			2010
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Leica+S+Typ+007">Leica S Typ 007</a></td>
+    		<td>
+    			45.0 x 30.0 mm
+    		</td>
+    		<td>
+    			37.5 MP
+    		</td>
+    		<td>
+    			<span>6.0</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D750">Nikon D750</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			24.3 MP
+    		</td>
+    		<td>
+    			<span>6.0</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3X">Nikon D3X</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			24.5 MP
+    		</td>
+    		<td>
+    			<span>5.9</span> µm
+    		</td>
+    	<td>
+    			2008
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D610">Nikon D610</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			24.7 MP
+    		</td>
+    		<td>
+    			<span>5.9</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+6D+Mark+II">Canon EOS 6D Mark II</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			26.2 MP
+    		</td>
+    		<td>
+    			<span>5.7</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5000">Nikon D5000</a></td>
+    		<td>
+    			23.6 x 15.8 mm
+    		</td>
+    		<td>
+    			12.3 MP
+    		</td>
+    		<td>
+    			<span>5.5</span> µm
+    		</td>
+    	<td>
+    			2009
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D90">Nikon D90</a></td>
+    		<td>
+    			23.6 x 15.8 mm
+    		</td>
+    		<td>
+    			12.3 MP
+    		</td>
+    		<td>
+    			<span>5.5</span> µm
+    		</td>
+    	<td>
+    			2009
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D300">Nikon D300</a></td>
+    		<td>
+    			23.6 x 15.8 mm
+    		</td>
+    		<td>
+    			12.3 MP
+    		</td>
+    		<td>
+    			<span>5.5</span> µm
+    		</td>
+    	<td>
+    			2007
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+5D+Mark+IV">Canon EOS 5D Mark IV</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			30.4 MP
+    		</td>
+    		<td>
+    			<span>5.3</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Hasselblad+H6D-50c">Hasselblad H6D-50c</a></td>
+    		<td>
+    			43.8 x 32.9 mm
+    		</td>
+    		<td>
+    			51.3 MP
+    		</td>
+    		<td>
+    			<span>5.3</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+645Z">Pentax 645Z</a></td>
+    		<td>
+    			43.8 x 32.8 mm
+    		</td>
+    		<td>
+    			51.4 MP
+    		</td>
+    		<td>
+    			<span>5.3</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+450D">Canon EOS 450D</a></td>
+    		<td>
+    			22.2 x 14.8 mm
+    		</td>
+    		<td>
+    			12.2 MP
+    		</td>
+    		<td>
+    			<span>5.2</span> µm
+    		</td>
+    	<td>
+    			2008
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Sigma+SD1+Merrill">Sigma SD1 Merrill</a></td>
+    		<td>
+    			24.0 x 16.0 mm
+    		</td>
+    		<td>
+    			14.8 MP
+    		</td>
+    		<td>
+    			<span>5.1</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3100">Nikon D3100</a></td>
+    		<td>
+    			23.1 x 15.4 mm
+    		</td>
+    		<td>
+    			14.2 MP
+    		</td>
+    		<td>
+    			<span>5.0</span> µm
+    		</td>
+    	<td>
+    			2010
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D810">Nikon D810</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			36.3 MP
+    		</td>
+    		<td>
+    			<span>4.9</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-1+II">Pentax K-1 II</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			36.4 MP
+    		</td>
+    		<td>
+    			<span>4.9</span> µm
+    		</td>
+    	<td>
+    			2018
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-1">Pentax K-1</a></td>
+    		<td>
+    			35.9 x 24.0 mm
+    		</td>
+    		<td>
+    			36.4 MP
+    		</td>
+    		<td>
+    			<span>4.9</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-30">Pentax K-30</a></td>
+    		<td>
+    			23.6 x 15.7 mm
+    		</td>
+    		<td>
+    			16.3 MP
+    		</td>
+    		<td>
+    			<span>4.8</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Hasselblad+H6D-100c">Hasselblad H6D-100c</a></td>
+    		<td>
+    			53.4 x 40.0 mm
+    		</td>
+    		<td>
+    			100.1 MP
+    		</td>
+    		<td>
+    			<span>4.6</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Sigma+SD15">Sigma SD15</a></td>
+    		<td>
+    			20.7 x 13.8 mm
+    		</td>
+    		<td>
+    			14.0 MP
+    		</td>
+    		<td>
+    			<span>4.5</span> µm
+    		</td>
+    	<td>
+    			2008
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D850">Nikon D850</a></td>
+    		<td>
+    			35.9 x 23.9 mm
+    		</td>
+    		<td>
+    			45.7 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-S2">Pentax K-S2</a></td>
+    		<td>
+    			23.7 x 15.7 mm
+    		</td>
+    		<td>
+    			20.1 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1200D">Canon EOS 1200D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+7D">Canon EOS 7D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2009
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+700D">Canon EOS 700D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+4000D">Canon EOS 4000D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2018
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+1300D">Canon EOS 1300D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+650D">Canon EOS 650D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+100D">Canon EOS 100D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			18.0 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-S1">Pentax K-S1</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			20.1 MP
+    		</td>
+    		<td>
+    			<span>4.3</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D500">Nikon D500</a></td>
+    		<td>
+    			23.5 x 15.7 mm
+    		</td>
+    		<td>
+    			20.9 MP
+    		</td>
+    		<td>
+    			<span>4.2</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D7500">Nikon D7500</a></td>
+    		<td>
+    			23.5 x 15.7 mm
+    		</td>
+    		<td>
+    			20.9 MP
+    		</td>
+    		<td>
+    			<span>4.2</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+5Ds">Canon EOS 5Ds</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			50.6 MP
+    		</td>
+    		<td>
+    			<span>4.1</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+5Ds+R">Canon EOS 5Ds R</a></td>
+    		<td>
+    			36.0 x 24.0 mm
+    		</td>
+    		<td>
+    			50.6 MP
+    		</td>
+    		<td>
+    			<span>4.1</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+70D">Canon EOS 70D</a></td>
+    		<td>
+    			22.5 x 15.0 mm
+    		</td>
+    		<td>
+    			20.2 MP
+    		</td>
+    		<td>
+    			<span>4.1</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+7D+Mark+II">Canon EOS 7D Mark II</a></td>
+    		<td>
+    			22.4 x 15.0 mm
+    		</td>
+    		<td>
+    			20.2 MP
+    		</td>
+    		<td>
+    			<span>4.1</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5200">Nikon D5200</a></td>
+    		<td>
+    			23.6 x 15.6 mm
+    		</td>
+    		<td>
+    			24.1 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2012
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5500">Nikon D5500</a></td>
+    		<td>
+    			23.6 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5300">Nikon D5300</a></td>
+    		<td>
+    			23.6 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D7100">Nikon D7100</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.1 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2013
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D7200">Nikon D7200</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3500">Nikon D3500</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2018
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-70">Pentax K-70</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3400">Nikon D3400</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D5600">Nikon D5600</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3300">Nikon D3300</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+KP">Pentax KP</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.3 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Pentax+K-3+II">Pentax K-3 II</a></td>
+    		<td>
+    			23.5 x 15.6 mm
+    		</td>
+    		<td>
+    			24.4 MP
+    		</td>
+    		<td>
+    			<span>3.9</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Nikon+D3200">Nikon D3200</a></td>
+    		<td>
+    			23.2 x 15.4 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.8</span> µm
+    		</td>
+    	<td>
+    			2014
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+250D">Canon EOS 250D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.1 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2019
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+2000D">Canon EOS 2000D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.1 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2018
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+750D">Canon EOS 750D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+760D">Canon EOS 760D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2015
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+77D">Canon EOS 77D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+200D">Canon EOS 200D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+80D">Canon EOS 80D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2016
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+800D">Canon EOS 800D</a></td>
+    		<td>
+    			22.3 x 14.9 mm
+    		</td>
+    		<td>
+    			24.2 MP
+    		</td>
+    		<td>
+    			<span>3.7</span> µm
+    		</td>
+    	<td>
+    			2017
+    		</td>
+    	</tr>
+    
+    	<tr>
+    		<td><a href="https://duckduckgo.com/?q=Canon+EOS+90D">Canon EOS 90D</a></td>
+    		<td>
+    			22.3 x 14.8 mm
+    		</td>
+    		<td>
+    			32.5 MP
+    		</td>
+    		<td>
+    			<span>3.2</span> µm
+    		</td>
+    	<td>
+    			2019
+    		</td>
+    	</tr>
+    
+	</tbody>
+  </table>
+
+    
+  
+  
+
+
+			
+  			</div>
+		</div>
+      </div>
+      
+      <footer>
+        <p>&copy; Maik Riechert 2014 
+          with help from <a href="http://twitter.github.com/bootstrap/" target="_blank">Twitter Bootstrap</a>
+        </p>
+      </footer>
+
+    </div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.4/js/jquery.tablesorter.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.18.4/js/jquery.tablesorter.widgets.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js"></script>
+	<script src="http://d3plus.org/js/d3plus.min.js"></script>
+	
+	
+<script>
+	$(function(){
+		$('.table').tablesorter({
+			theme: 'bootstrap',
+			headerTemplate: '{content} {icon}',
+			widgets: ["uitheme"],
+			sortInitialOrder: 'desc',
+			sortRestart: true,
+		});
+		
+		$('#create_plot').click(function() {
+			var data = [];
+			$("#table_with_pitch tbody tr").each(function(i, el) {
+			    var cam = {};
+			    cam.name = $("td:first-child", this).text();
+			    cam.year = $("td:nth-child(5)", this).text().trim();
+			    cam.value = parseFloat($("td:nth-child(4) span", this).text());
+			    if (cam.year.length == 4) {
+			    	cam.year = parseFloat(cam.year);
+			    	data.push(cam);
+			    }
+			  });
+			
+			$("#pitch_plot").empty().show();
+			d3plus.viz()
+			    .container("#pitch_plot")
+			    .data(data)
+			    .type("box")
+			    .id("name")
+			    .x("year")
+			    .y("value")
+			    .draw();
+		});
+	});
+</script>
+
+</body>
+</html>
