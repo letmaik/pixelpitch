@@ -1,5 +1,3 @@
-from __future__ import division, print_function, absolute_import
-
 '''
 This script calculates pixel pitch in µm for cameras listed on geizhals.at.
 '''
@@ -8,8 +6,7 @@ import urllib.request
 import re
 import html
 from math import sqrt
-from collections import namedtuple
-from _collections import defaultdict
+from collections import namedtuple, defaultdict
 
 # For fixed-lens cameras we assume 4:3 sensor aspect ratio if not given.
 # Also, the following mapping of given sensor sizes to sensor areas is used from wikipedia:
@@ -18,14 +15,15 @@ from _collections import defaultdict
 fixed_url = 'http://geizhals.eu/?cat=dcam&asuch=&bpmax=&v=e&plz=&dist=&mail=&fcols=1418&fcols=86&fcols=3377&bl1_id=1000&sort=artikel'
 
 # For DSLR and EVIL cameras we use the specified sensor dimensions as is.
-dslr_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_Spiegelreflex+(DSLR)'
-evil_url = 'http://geizhals.eu/?cat=dcamsp&v=e&fcols=166&fcols=169&fcols=3378&bl1_id=1000&sort=artikel&xf=1480_Spiegellos+(DSLM)'
+dslr_url = 'https://geizhals.eu/?cat=dcamsp&xf=1480_Spiegelreflex+(DSLR)&asuch=&bpmin=&bpmax=&v=e&hloc=at&hloc=de&hloc=pl&hloc=uk&hloc=eu&plz=&dist=&mail=&fcols=166&fcols=5761&fcols=3378&sort=artikel&bl1_id=1000'
+evil_url = 'https://geizhals.eu/?cat=dcamsp&xf=1480_Spiegellos+(DSLM)&asuch=&bpmin=&bpmax=&v=e&hloc=at&hloc=de&hloc=pl&hloc=uk&hloc=eu&plz=&dist=&mail=&fcols=169&fcols=166&fcols=5761&fcols=3378&sort=artikel&bl1_id=1000'
 
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<div class="productlist__additionalfilter">\s+(1/[\d\.]+)&quot;\s+</div>')
 mpix_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+) Megapixel\s+</div>')
+pitch_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+)µm\s+</div>')
 year_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d]{4})\s+</div>')
-name_re = re.compile(r'<a class="productlist__link" href=".+">\s+(<span class=notrans>\s+)?(.+)\s+(</span>\s+)?</a>')
+name_re = re.compile(r'data-name="(.+?)"')
 
 def sensor_area(width, height):
     return width*height
@@ -86,11 +84,12 @@ def extract_entries(url):
     html = opener.open(url).read().decode('utf-8')
     print("Response length: {}".format(len(html)))
     entries = re.findall(r'class="row productlist__product.+?<div class="productlist__bestpriceoffer">', html, re.DOTALL)
+    assert entries
     print("Found {} entries".format(len(entries)))
     assert len(entries) > 0
     return entries
 
-Spec = namedtuple('Spec', 'name type size mpix year')
+Spec = namedtuple('Spec', 'name type size pitch mpix year')
 
 def extract_specs(entries):
     specs = []
@@ -98,10 +97,11 @@ def extract_specs(entries):
         name_match = name_re.search(entry)
         type_match = type_re.search(entry)
         size_match = size_re.search(entry)    
+        pitch_match = pitch_re.search(entry)
         mpix_match = mpix_re.search(entry)
         year_match = year_re.search(entry)
         
-        name = html.unescape(name_match.group(2))
+        name = html.unescape(name_match.group(1))
         name = " ".join(name.split()) # removes consecutive whitespaces
         
         if type_match is not None:
@@ -115,6 +115,11 @@ def extract_specs(entries):
         else:
             size = None
         
+        if pitch_match is not None:
+            pitch = float(pitch_match.group(1))
+        else:
+            pitch = None
+        
         if mpix_match is not None:
             mpix = float(mpix_match.group(1))
         else:
@@ -125,7 +130,7 @@ def extract_specs(entries):
         else:
             year = None
         
-        specs.append(Spec(name, typ, size, mpix, year))
+        specs.append(Spec(name, typ, size, pitch, mpix, year))
     
     specs = deduplicate_specs(specs)
     
@@ -137,7 +142,7 @@ extras = ['weiß', 'schwarz', 'rot', 'grau', 'pink', 'gold', 'silber', 'violett'
           'mit Objektiv', 'Gehäuse']
 extras_re = re.compile('|'.join(extras))
 
-parens_re = re.compile('\(.+\)$')
+parens_re = re.compile(r'\(.+\)$')
 
 def deduplicate_specs(specs):
     '''
@@ -159,11 +164,11 @@ def deduplicate_specs(specs):
     # check if grouped cameras have the same sensor specs
     for unified_name, grouped_specs in groups.items():
         ref = grouped_specs[0]
-        if all(spec.type == ref.type and spec.size == ref.size and spec.mpix == ref.mpix 
+        if all(spec.type == ref.type and spec.size == ref.size and spec.pitch == ref.pitch and spec.mpix == ref.mpix 
                for spec in grouped_specs):
             years = [s.year for s in grouped_specs if s.year]
             year = min(years) if years else None
-            rest.append(Spec(unified_name, ref.type, ref.size, ref.mpix, year))
+            rest.append(Spec(unified_name, ref.type, ref.size, ref.pitch, ref.mpix, year))
         else:
             rest.extend(grouped_specs)
     
@@ -174,7 +179,7 @@ def deduplicate_specs(specs):
         match = parens_re.search(name)
         if match:
             name = name[:match.start()].strip()
-        return Spec(name, spec.type, spec.size, spec.mpix, spec.year)
+        return Spec(name, spec.type, spec.size, spec.pitch, spec.mpix, spec.year)
         
     rest = list(map(remove_parens, rest))
     
@@ -193,7 +198,9 @@ def derive_spec(spec, use_size_table=False):
     else:
         area = None
 
-    if spec.mpix is not None and area is not None:
+    if spec.pitch:
+        pitch = spec.pitch
+    elif spec.mpix is not None and area is not None:
         pitch = pixel_pitch(area, spec.mpix)
     else:
         pitch = None
