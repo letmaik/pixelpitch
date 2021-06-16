@@ -21,7 +21,7 @@ evil_url = 'https://geizhals.eu/?cat=dcamsp&xf=1480_Spiegellos+(DSLM)&asuch=&bpm
 size_re = re.compile(r'\(([\d\.]+)x([\d\.]+)mm')
 type_re = re.compile(r'<div class="productlist__additionalfilter">\s+(1/[\d\.]+)&quot;\s+</div>')
 mpix_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+) Megapixel\s+</div>')
-pitch_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+)µm\s+</div>')
+pitch_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d\.]+)&micro;m\s+</div>')
 year_re = re.compile(r'<div class="productlist__additionalfilter">\s+([\d]{4})\s+</div>')
 name_re = re.compile(r'data-name="(.+?)"')
 
